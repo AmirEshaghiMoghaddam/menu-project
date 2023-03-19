@@ -75,6 +75,8 @@ const menu = [
 ];
 
 
+// display the menu
+
 // solution number 1: this solution does not work when data comming from server changes!
 // const items = document.querySelectorAll('.menu-item');
 
@@ -96,7 +98,7 @@ window.addEventListener('DOMContentLoaded', displayMenuItems(menu));
 
 function displayMenuItems(menuItems) {
      let displayMenu = menuItems.map(function (item) {
-          return `<article class="menu-item">
+          return (`<article class="menu-item">
           <img src=${item.img} class="photo" alt="${item.title}">
           <div class="item-info">
                <header>
@@ -108,7 +110,43 @@ function displayMenuItems(menuItems) {
                </p>
           </div>
      </article>`
-     });
+          )
+     }
+     );
      displayMenu = displayMenu.join('');
      sectionCenter.innerHTML = displayMenu;
 }
+
+// categorizing the menu
+
+let btns = document.querySelectorAll('.btn-container .filter-btn');
+
+btns.forEach((btn) => btn.addEventListener('click', function (e) {
+     let displayMenu = menu.map(function (item) {
+          let myText = `<article class="menu-item">
+               <img src=${item.img} class="photo" alt="${item.title}">
+               <div class="item-info">
+                    <header>
+                         <h4>${item.title}</h4>
+                         <h4 class="price">${item.price} $</h4>
+                    </header>
+                    <p class="item-text">
+                    ${item.desc}
+                    </p>
+               </div>
+          </article>`
+          if (e.currentTarget.innerHTML == 'all') {
+               return myText;
+          }
+          else if (e.currentTarget.innerHTML == item.category) {
+               return myText;
+          }
+     }
+     );
+     displayMenu = displayMenu.join('');
+     sectionCenter.innerHTML = displayMenu;
+
+}
+));
+
+
