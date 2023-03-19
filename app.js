@@ -74,5 +74,41 @@ const menu = [
      },
 ];
 
-const sectionCenter = document.querySelector('.section-center');
 
+// solution number 1: this solution does not work when data comming from server changes!
+// const items = document.querySelectorAll('.menu-item');
+
+// items.forEach((item, index) => {
+//      item.querySelector('img.photo').src = `./images/item-${index + 1}.jpeg`;
+//      item.querySelector('.item-info header h4').innerHTML = menu[index].title;
+//      item.querySelector('.item-info header h4.price').innerHTML = menu[index].price;
+//      item.querySelector('p.item-text').innerHTML = menu[index].desc;
+// }
+// );
+
+
+
+// solution no.2: dynamic solution
+
+let sectionCenter = document.querySelector('.section-center');
+
+window.addEventListener('DOMContentLoaded', displayMenuItems(menu));
+
+function displayMenuItems(menuItems) {
+     let displayMenu = menuItems.map(function (item) {
+          return `<article class="menu-item">
+          <img src=${item.img} class="photo" alt="${item.title}">
+          <div class="item-info">
+               <header>
+                    <h4>${item.title}</h4>
+                    <h4 class="price">${item.price} $</h4>
+               </header>
+               <p class="item-text">
+               ${item.desc}
+               </p>
+          </div>
+     </article>`
+     });
+     displayMenu = displayMenu.join('');
+     sectionCenter.innerHTML = displayMenu;
+}
